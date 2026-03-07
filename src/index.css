@@ -1,65 +1,261 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+/* ========= FONTS ========= */
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Dancing+Script:wght@600;700&display=swap');
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+/* ========= RESET ========= */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
+/* ========= THEME: BUBBLEGUM (default) ========= */
+:root,
+[data-theme="bubblegum"] {
+  --color-primary: #ff69b4;
+  --color-primary-dark: #e0509a;
+  --color-primary-light: #ffb6d9;
+  --color-secondary: #ff85c8;
+  --color-accent: #ff3399;
+  --color-bg: #fff0f8;
+  --color-bg-2: #ffe4f0;
+  --color-bg-card: #ffffff;
+  --color-text: #4a1040;
+  --color-text-muted: #9b6080;
+  --color-border: #ffb6d9;
+  /* Fixed dark colors for card bodies (always on light pastel backgrounds) */
+  --color-card-text: #2d1537;
+  --color-card-text-muted: #7a5a72;
+  --color-card-date: #9b6080;
+  --gradient-header: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+  --gradient-bg: linear-gradient(160deg, #fff0f8 0%, #ffe4f0 60%, #ffd6e8 100%);
+  --shadow-sm: 0 2px 8px rgba(255, 105, 180, 0.15);
+  --shadow-md: 0 4px 20px rgba(255, 105, 180, 0.22);
+  --shadow-lg: 0 8px 40px rgba(255, 105, 180, 0.28);
+  --radius: 18px;
+  --radius-sm: 10px;
+  --font-main: 'Quicksand', 'Segoe UI', system-ui, sans-serif;
+  --font-title: 'Dancing Script', 'Georgia', cursive;
+}
+
+/* ========= THEME: ROSE GOLD ========= */
+[data-theme="rose-gold"] {
+  --color-primary: #c0756e;
+  --color-primary-dark: #9a4d47;
+  --color-primary-light: #e8b4b0;
+  --color-secondary: #d4907a;
+  --color-accent: #b5451b;
+  --color-bg: #fff9f7;
+  --color-bg-2: #f5e8e4;
+  --color-bg-card: #fffaf8;
+  --color-text: #3d1a17;
+  --color-text-muted: #9e7070;
+  --color-border: #e8c5c0;
+  --color-card-text: #3d1a17;
+  --color-card-text-muted: #7a5a52;
+  --color-card-date: #9e7070;
+  --gradient-header: linear-gradient(135deg, #c0756e 0%, #d4907a 50%, #e8b4b0 100%);
+  --gradient-bg: linear-gradient(160deg, #fff9f7 0%, #f5e8e4 60%, #eedede 100%);
+  --shadow-sm: 0 2px 8px rgba(192, 117, 110, 0.15);
+  --shadow-md: 0 4px 20px rgba(192, 117, 110, 0.22);
+  --shadow-lg: 0 8px 40px rgba(192, 117, 110, 0.28);
+  --radius: 18px;
+  --radius-sm: 10px;
+  --font-main: 'Quicksand', 'Segoe UI', system-ui, sans-serif;
+  --font-title: 'Dancing Script', 'Georgia', cursive;
+}
+
+/* ========= THEME: LAVENDER ========= */
+[data-theme="lavender"] {
+  --color-primary: #9b59b6;
+  --color-primary-dark: #7d3c98;
+  --color-primary-light: #d2b4de;
+  --color-secondary: #bb8fce;
+  --color-accent: #8e44ad;
+  --color-bg: #f9f0ff;
+  --color-bg-2: #ede4f5;
+  --color-bg-card: #fdf8ff;
+  --color-text: #2c1654;
+  --color-text-muted: #7d6b9e;
+  --color-border: #d7bde2;
+  --color-card-text: #2c1654;
+  --color-card-text-muted: #6b5a8a;
+  --color-card-date: #7d6b9e;
+  --gradient-header: linear-gradient(135deg, #9b59b6 0%, #bb8fce 100%);
+  --gradient-bg: linear-gradient(160deg, #f9f0ff 0%, #ede4f5 60%, #e4d8f0 100%);
+  --shadow-sm: 0 2px 8px rgba(155, 89, 182, 0.15);
+  --shadow-md: 0 4px 20px rgba(155, 89, 182, 0.22);
+  --shadow-lg: 0 8px 40px rgba(155, 89, 182, 0.28);
+  --radius: 18px;
+  --radius-sm: 10px;
+  --font-main: 'Quicksand', 'Segoe UI', system-ui, sans-serif;
+  --font-title: 'Dancing Script', 'Georgia', cursive;
+}
+
+/* ========= THEME: PEACH ========= */
+[data-theme="peach"] {
+  --color-primary: #e8824a;
+  --color-primary-dark: #c55e2a;
+  --color-primary-light: #f5b895;
+  --color-secondary: #f0a868;
+  --color-accent: #d96a30;
+  --color-bg: #fff7f2;
+  --color-bg-2: #fce8da;
+  --color-bg-card: #fffaf8;
+  --color-text: #3d1f0f;
+  --color-text-muted: #9e6b4a;
+  --color-border: #f5c8b0;
+  --color-card-text: #3d1f0f;
+  --color-card-text-muted: #7a5040;
+  --color-card-date: #9e6b4a;
+  --gradient-header: linear-gradient(135deg, #e8824a 0%, #f5b895 100%);
+  --gradient-bg: linear-gradient(160deg, #fff7f2 0%, #fce8da 60%, #f8dece 100%);
+  --shadow-sm: 0 2px 8px rgba(232, 130, 74, 0.15);
+  --shadow-md: 0 4px 20px rgba(232, 130, 74, 0.22);
+  --shadow-lg: 0 8px 40px rgba(232, 130, 74, 0.28);
+  --radius: 18px;
+  --radius-sm: 10px;
+  --font-main: 'Quicksand', 'Segoe UI', system-ui, sans-serif;
+  --font-title: 'Dancing Script', 'Georgia', cursive;
+}
+
+/* ========= THEME: MIDNIGHT ========= */
+[data-theme="midnight"] {
+  --color-primary: #ff69b4;
+  --color-primary-dark: #d9498e;
+  --color-primary-light: #ff95c8;
+  --color-secondary: #c040a0;
+  --color-accent: #ff1493;
+  --color-bg: #1a0828;
+  --color-bg-2: #250d38;
+  --color-bg-card: #2e1040;
+  --color-text: #ffe0f0;
+  --color-text-muted: #c090b8;
+  --color-border: #6a2a6a;
+  /* Card backgrounds in midnight are still light pastels (user-selected),
+     so card text must remain dark for readability */
+  --color-card-text: #2d1537;
+  --color-card-text-muted: #7a5a72;
+  --color-card-date: #9b6080;
+  --gradient-header: linear-gradient(135deg, #3d0a5a 0%, #8b0050 100%);
+  --gradient-bg: linear-gradient(160deg, #1a0828 0%, #250d38 60%, #2e0840 100%);
+  --shadow-sm: 0 2px 8px rgba(255, 105, 180, 0.20);
+  --shadow-md: 0 4px 20px rgba(255, 105, 180, 0.28);
+  --shadow-lg: 0 8px 40px rgba(255, 105, 180, 0.35);
+  --radius: 18px;
+  --radius-sm: 10px;
+  --font-main: 'Quicksand', 'Segoe UI', system-ui, sans-serif;
+  --font-title: 'Dancing Script', 'Georgia', cursive;
+}
+
+/* ========= BASE STYLES ========= */
+html {
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
+  font-family: var(--font-main);
+  background: var(--gradient-bg);
+  color: var(--color-text);
   min-height: 100vh;
+  min-width: 320px;
+  line-height: 1.6;
+  transition: background 0.4s ease, color 0.4s ease;
 }
 
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  min-height: 100vh;
   width: 100%;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+/* ========= ANIMATIONS ========= */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
   }
-  button {
-    background-color: #f9f9f9;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.18); }
+  100% { transform: scale(1); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-6px); }
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 1; transform: scale(1) rotate(0deg); }
+  25%       { opacity: 0.6; transform: scale(1.2) rotate(15deg); }
+  50%       { opacity: 1; transform: scale(0.9) rotate(-10deg); }
+  75%       { opacity: 0.8; transform: scale(1.1) rotate(5deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 105, 180, 0.4); }
+  50%       { box-shadow: 0 0 0 10px rgba(255, 105, 180, 0); }
+}
+
+@keyframes bounce-in {
+  0%   { transform: scale(0.3); opacity: 0; }
+  50%  { transform: scale(1.05); opacity: 0.9; }
+  70%  { transform: scale(0.9); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ========= SCROLLBAR ========= */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg-2);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary-light);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
 }
