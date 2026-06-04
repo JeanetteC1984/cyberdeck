@@ -58,9 +58,9 @@ export default function JournalCard({ entry, onEdit, onDelete }: JournalCardProp
           <button
             className="card-action-btn"
             onClick={onEdit}
-            title="Edit entry"
+            title="Edit chapter"
           >
-            ✏️
+            🪶
           </button>
           <button
             className="card-action-btn"

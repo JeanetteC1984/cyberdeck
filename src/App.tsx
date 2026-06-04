@@ -19,23 +19,23 @@ import './App.css'
 const SAMPLE_ENTRIES: JournalEntry[] = [
   {
     id: '1',
-    title: 'My First Journal Entry ✨',
+    title: 'The Veil Feels Thin Tonight',
     content:
-      "Today I started my digital journal and I'm SO excited! This is my little corner of the internet where I can be completely myself. I have so many things I want to write about — my goals, my dreams, the little moments that make me smile. Here's to new beginnings! 🌸",
+      "There is a restlessness in the air that I cannot shake. I lit three candles before midnight and sat with my thoughts until the wax ran low. The flame kept bending west — I take that as a sign to let go of what I have been holding. Writing feels like the only ritual that never fails me.",
     date: new Date(Date.now() - 86400000).toISOString(),
-    mood: '🤩',
-    stickers: ['💖', '✨', '🎀'],
-    cardColor: '#ffe4e6',
+    mood: '🌙',
+    stickers: ['🕯️', '🌒', '✨'],
+    cardColor: '#1e1530',
   },
   {
     id: '2',
-    title: 'Goals for this month 🌟',
+    title: 'Intentions for the New Moon',
     content:
-      "Let's make this month count! I want to read two books, start morning walks, drink more water, and practice gratitude every single day. Small steps, big dreams. 💪",
+      "Set out my crystals before dawn. This cycle I am focusing on clarity — letting the fog of last season finally lift. Wrote my intentions on a slip of parchment and watched the smoke carry them upward. Something is already shifting beneath the surface.",
     date: new Date(Date.now() - 3600000).toISOString(),
-    mood: '😊',
-    stickers: ['🌟', '💫', '🦋'],
-    cardColor: '#ede9fe',
+    mood: '🔮',
+    stickers: ['🌑', '💎', '🌿'],
+    cardColor: '#14182e',
   },
 ]
 
@@ -50,7 +50,7 @@ function App() {
   })
 
   const [theme, setTheme] = useState<Theme>(() => {
-    return (localStorage.getItem('journal-theme') as Theme) || 'bubblegum'
+    return (localStorage.getItem('journal-theme') as Theme) || 'grimoire'
   })
 
   const [editingEntry, setEditingEntry] = useState<JournalEntry | null>(null)
@@ -82,9 +82,9 @@ function App() {
       title: '',
       content: '',
       date: new Date().toISOString(),
-      mood: '😊',
+      mood: '🌙',
       stickers: [],
-      cardColor: '#ffe4e6',
+      cardColor: '#1e1530',
     }
     setEditingEntry(newEntry)
     setIsNewEntry(true)
@@ -164,11 +164,11 @@ function App() {
         <header className="app-header">
           <div className="header-left">
             <h1 className="app-title">
-              <span className="title-emoji">🌸</span>
-              Dear Diary
-              <span className="title-emoji">✨</span>
+              <span className="title-emoji">🌙</span>
+              The Grimoire
+              <span className="title-emoji">🔮</span>
             </h1>
-            <p className="app-subtitle">Your personal space to shine 💕</p>
+            <p className="app-subtitle">Where shadows whisper and secrets keep</p>
           </div>
           <div className="header-right">
             <button
@@ -176,10 +176,10 @@ function App() {
               onClick={() => setShowThemePicker((v) => !v)}
               title="Change theme"
             >
-              🎨
+              🌀
             </button>
             <button className="btn btn-primary" onClick={openNewEntry}>
-              + New Entry
+              + New Chapter
             </button>
           </div>
         </header>
@@ -200,11 +200,11 @@ function App() {
         <main className="entries-container">
           {entries.length === 0 ? (
             <div className="empty-state">
-              <span className="empty-emoji">📔</span>
-              <h2>Your journal is empty</h2>
-              <p>Start writing your story! ✨</p>
+              <span className="empty-emoji">🔮</span>
+              <h2>Your grimoire awaits</h2>
+              <p>The pages are blank. The ink is ready. Begin your first chapter.</p>
               <button className="btn-save btn-save-cta" onClick={openNewEntry}>
-                Write First Entry 🌸
+                Open the Grimoire 🌙
               </button>
             </div>
           ) : (
@@ -258,8 +258,8 @@ function App() {
         </DragOverlay>
 
         {/* ── FAB ── */}
-        <button className="fab" onClick={openNewEntry} title="New entry">
-          ✏️
+        <button className="fab" onClick={openNewEntry} title="New chapter">
+          🪶
         </button>
       </div>
     </DndContext>

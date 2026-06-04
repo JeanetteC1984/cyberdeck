@@ -10,7 +10,7 @@ export default function ThemePicker({ currentTheme, onSelect, onClose }: ThemePi
   return (
     <div className="theme-picker-overlay" onClick={onClose}>
       <div className="theme-picker-panel" onClick={(e) => e.stopPropagation()}>
-        <p className="theme-picker-title">✨ Choose Your Vibe</p>
+        <p className="theme-picker-title">🔮 Choose Your Craft</p>
         <div className="theme-options">
           {THEMES.map((t: ThemeOption) => (
             <button
