@@ -28,18 +28,19 @@
 
 .app-title {
   font-family: var(--font-title);
-  font-size: clamp(1.8rem, 4vw, 2.6rem);
-  color: #fff;
+  font-size: clamp(1.5rem, 4vw, 2.4rem);
+  color: var(--color-primary-light);
   display: flex;
   align-items: center;
   gap: 0.4rem;
   line-height: 1.1;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 20px var(--color-primary), 0 2px 8px rgba(0, 0, 0, 0.6);
 }
 
 .title-emoji {
   display: inline-block;
-  animation: float 3s ease-in-out infinite;
+  animation: candle-flicker 4s ease-in-out infinite;
 }
 
 .title-emoji:last-child {
@@ -77,12 +78,14 @@
 }
 
 .btn-primary {
-  background: #fff;
-  color: var(--color-primary);
+  background: var(--color-primary);
+  color: var(--color-bg);
   padding: 0.55rem 1.3rem;
   border-radius: 50px;
   font-size: 0.95rem;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
 }
 
 .btn-primary:hover {
@@ -136,7 +139,7 @@
 }
 
 .btn-danger:hover {
-  background: #fde8e8;
+  background: rgba(180, 50, 50, 0.2);
 }
 
 /* ========= ENTRIES CONTAINER ========= */
@@ -175,8 +178,8 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 4px;
-  background: var(--gradient-header);
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--color-primary), var(--color-primary-light), var(--color-primary), transparent);
   border-radius: var(--radius) var(--radius) 0 0;
 }
 
@@ -257,7 +260,7 @@
 }
 
 .card-action-btn:hover {
-  background: var(--color-bg-2);
+  background: rgba(255, 255, 255, 0.1);
   transform: scale(1.15);
 }
 

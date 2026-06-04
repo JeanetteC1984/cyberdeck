@@ -8,7 +8,7 @@ export interface JournalEntry {
   cardColor: string;
 }
 
-export type Theme = 'bubblegum' | 'rose-gold' | 'lavender' | 'peach' | 'midnight';
+export type Theme = 'grimoire' | 'moonlit' | 'forest' | 'ember' | 'amber';
 
 export interface ThemeOption {
   id: Theme;
@@ -19,40 +19,40 @@ export interface ThemeOption {
 }
 
 export const THEMES: ThemeOption[] = [
-  { id: 'bubblegum', name: 'Bubblegum', emoji: '🩷', primaryColor: '#ff69b4', bgColor: '#fff0f8' },
-  { id: 'rose-gold', name: 'Rose Gold', emoji: '🌹', primaryColor: '#c0756e', bgColor: '#fff9f7' },
-  { id: 'lavender', name: 'Lavender', emoji: '💜', primaryColor: '#9b59b6', bgColor: '#f9f0ff' },
-  { id: 'peach', name: 'Peach', emoji: '🍑', primaryColor: '#e8824a', bgColor: '#fff7f2' },
-  { id: 'midnight', name: 'Midnight', emoji: '🌙', primaryColor: '#ff69b4', bgColor: '#1a0828' },
+  { id: 'grimoire',  name: 'Grimoire',     emoji: '🔮', primaryColor: '#c9a227', bgColor: '#0f0a1a' },
+  { id: 'moonlit',   name: 'Moonlit',      emoji: '🌙', primaryColor: '#8ab4d4', bgColor: '#06090f' },
+  { id: 'forest',    name: 'Forest Witch', emoji: '🌿', primaryColor: '#6aab6a', bgColor: '#060e06' },
+  { id: 'ember',     name: 'Ember',        emoji: '🕯️', primaryColor: '#d4622a', bgColor: '#0e0505' },
+  { id: 'amber',     name: 'Amber Witch',  emoji: '✨', primaryColor: '#d4922a', bgColor: '#0c0a04' },
 ];
 
 export const MOODS = [
-  { emoji: '🥰', label: 'Loved' },
-  { emoji: '😊', label: 'Happy' },
-  { emoji: '🤩', label: 'Excited' },
-  { emoji: '😌', label: 'Calm' },
-  { emoji: '🤔', label: 'Thoughtful' },
-  { emoji: '😢', label: 'Sad' },
-  { emoji: '😤', label: 'Frustrated' },
-  { emoji: '😴', label: 'Tired' },
+  { emoji: '🌙', label: 'Mystical' },
+  { emoji: '✨', label: 'Enchanted' },
+  { emoji: '🔮', label: 'Prophetic' },
+  { emoji: '🌿', label: 'Grounded' },
+  { emoji: '🦉', label: 'Wise' },
+  { emoji: '🕯️', label: 'Reflective' },
+  { emoji: '🌑', label: 'Dark Moon' },
+  { emoji: '🌀', label: 'Turbulent' },
 ];
 
 export const CARD_COLORS = [
-  '#ffe4e6',
-  '#fce7f3',
-  '#ede9fe',
-  '#dbeafe',
-  '#d1fae5',
-  '#fef3c7',
-  '#ffedd5',
-  '#f0fdf4',
+  '#1e1530', // deep plum
+  '#14182e', // midnight indigo
+  '#0f2018', // witch green
+  '#221010', // ember crimson
+  '#1e1808', // dark amber
+  '#0a1e20', // dark teal
+  '#1a1625', // shadow galaxy
+  '#1e1420', // witch mauve
 ];
 
 export const STICKER_CATEGORIES: Record<string, string[]> = {
-  '🩷 Hearts': ['💗', '💖', '💝', '💘', '💓', '💞', '💕', '❤️', '🤍', '🩶'],
-  '⭐ Stars': ['⭐', '🌟', '✨', '💫', '🌠', '⚡', '🌙', '☀️'],
-  '🌸 Flowers': ['🌸', '🌺', '🌷', '🌻', '🌼', '💐', '🌹', '🏵️'],
-  '🦋 Fun': ['🎀', '👑', '💎', '🦋', '🌈', '🎉', '🎊', '🦄'],
-  '🧁 Treats': ['🧁', '🍰', '🍩', '☕', '🍵', '🍓', '🍒', '🍫'],
-  '💅 Vibes': ['💅', '💄', '👗', '🛁', '🧸', '📚', '🎨', '💃'],
+  '🌙 Moon':      ['🌙', '🌛', '🌜', '🌚', '🌕', '✨', '💫', '⭐', '🌟', '🌠', '🌌', '🌃'],
+  '🔮 Magic':     ['🔮', '🪄', '🧿', '🪬', '🗝️', '📜', '📿', '🏺', '⚗️', '🧪', '🃏', '🎴'],
+  '🌿 Botanica':  ['🌿', '🍃', '🍄', '🌾', '🌱', '🌺', '🪷', '🥀', '🌻', '🌸', '🍀', '🌲'],
+  '🦉 Familiars': ['🦉', '🐈‍⬛', '🦇', '🐍', '🕷️', '🦋', '🐺', '🐉', '🐸', '🦂', '🦔', '🦅'],
+  '🕯️ Ritual':   ['🕯️', '💎', '🌀', '🌊', '🔥', '💨', '🪨', '🪶', '🌹', '🎭', '🔔', '🧲'],
+  '🖤 Shadow':    ['🖤', '🌑', '🕸️', '🥀', '💔', '🩶', '🌫️', '⛈️', '🌪️', '💀', '🪦', '👁️'],
 };

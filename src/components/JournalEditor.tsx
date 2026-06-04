@@ -38,7 +38,7 @@ export default function JournalEditor({
         {/* Header */}
         <div className="editor-header">
           <span className="editor-header-title">
-            {isNew ? '✨ New Entry' : '✏️ Edit Entry'}
+            {isNew ? '🌙 New Chapter' : '🪶 Edit Chapter'}
           </span>
           <button className="editor-close-btn" onClick={onClose} title="Close">
             ✕
@@ -50,7 +50,7 @@ export default function JournalEditor({
           {/* Title */}
           <input
             className="editor-title-input"
-            placeholder="Give this entry a title…"
+            placeholder="Name this chapter…"
             value={entry.title}
             onChange={(e) => update({ title: e.target.value })}
             autoFocus
@@ -59,7 +59,7 @@ export default function JournalEditor({
           {/* Content */}
           <textarea
             className="editor-content-area"
-            placeholder="Write your heart out… 💕"
+            placeholder="Let the words flow… tell the spirits what weighs upon your heart."
             value={entry.content}
             onChange={(e) => update({ content: e.target.value })}
             rows={6}
@@ -67,7 +67,7 @@ export default function JournalEditor({
 
           {/* Mood */}
           <div>
-            <p className="section-label">How are you feeling?</p>
+            <p className="section-label">Current energy</p>
             <div className="mood-grid">
               {MOODS.map((m) => (
                 <button
@@ -85,7 +85,7 @@ export default function JournalEditor({
 
           {/* Card color */}
           <div>
-            <p className="section-label">Card color</p>
+            <p className="section-label">Bind color</p>
             <div className="color-swatches">
               {CARD_COLORS.map((color) => (
                 <button
@@ -101,14 +101,14 @@ export default function JournalEditor({
 
           {/* Sticker Drop Zone */}
           <div>
-            <p className="section-label">Stickers — drag or click to add 🎀</p>
+            <p className="section-label">Sigils & symbols — drag or click to add 🔮</p>
             <div
               ref={setNodeRef}
               className={`sticker-drop-zone${isOver ? ' is-over' : ''}`}
             >
               {entry.stickers.length === 0 && (
                 <span className="sticker-drop-zone-hint">
-                  Drop stickers here or pick from below ✨
+                  Drop your sigils here or choose from below…
                 </span>
               )}
               {entry.stickers.map((s, i) => (
@@ -148,7 +148,7 @@ export default function JournalEditor({
               onClick={() => onSave(entry)}
               disabled={!entry.title.trim() && !entry.content.trim() && entry.stickers.length === 0}
             >
-              💾 Save Entry
+              🪄 Seal Entry
             </button>
           </div>
         </div>

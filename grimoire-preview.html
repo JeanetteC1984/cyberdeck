@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="grimoire">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Grimoire — Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+<style>
+/* ── RESET ──────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── GRIMOIRE THEME VARIABLES ────────────────────────────────── */
+:root {
+  --color-primary:         #c9a227;
+  --color-primary-dark:    #9a7a10;
+  --color-primary-light:   #e8c86a;
+  --color-secondary:       #9b6b9b;
+  --color-bg:              #0f0a1a;
+  --color-bg-2:            #1a1228;
+  --color-bg-card:         #1e1530;
+  --color-text:            #f0e8d0;
+  --color-text-muted:      #9080a8;
+  --color-border:          #3a2560;
+  --color-card-text:       #f0e8d0;
+  --color-card-text-muted: #b0a080;
+  --color-card-date:       #907868;
+  --gradient-header:       linear-gradient(135deg, #0d0720 0%, #2a1058 50%, #0d0720 100%);
+  --shadow-sm:             0 2px 8px rgba(0,0,0,.5);
+  --shadow-md:             0 4px 20px rgba(0,0,0,.6);
+  --shadow-lg:             0 8px 40px rgba(0,0,0,.7);
+  --radius:                14px;
+  --radius-sm:             8px;
+  --font-main:             'Lora', Georgia, serif;
+  --font-title:            'Cinzel', Georgia, serif;
+}
+
+/* ── THEME SWAPS ─────────────────────────────────────────────── */
+[data-theme="moonlit"] {
+  --color-primary:#8ab4d4; --color-primary-light:#b8d8f0;
+  --color-bg:#06090f; --color-bg-2:#0e1420; --color-bg-card:#121c30;
+  --color-text:#d8e8f8; --color-text-muted:#6888a8; --color-border:#1e3050;
+  --color-card-text:#d8e8f8; --color-card-text-muted:#8098b0; --color-card-date:#607888;
+  --gradient-header:linear-gradient(135deg,#060c18 0%,#0e1e3a 50%,#060c18 100%);
+}
+[data-theme="forest"] {
+  --color-primary:#6aab6a; --color-primary-light:#9acc9a;
+  --color-bg:#060e06; --color-bg-2:#0e180e; --color-bg-card:#122012;
+  --color-text:#d0e8c8; --color-text-muted:#709070; --color-border:#1e4020;
+  --color-card-text:#d0e8c8; --color-card-text-muted:#809870; --color-card-date:#608060;
+  --gradient-header:linear-gradient(135deg,#040c04 0%,#102810 50%,#040c04 100%);
+}
+[data-theme="ember"] {
+  --color-primary:#d4622a; --color-primary-light:#e89868;
+  --color-bg:#0e0505; --color-bg-2:#1a0d08; --color-bg-card:#221010;
+  --color-text:#f0d8c8; --color-text-muted:#a07060; --color-border:#4a1a10;
+  --color-card-text:#f0d8c8; --color-card-text-muted:#b08870; --color-card-date:#906858;
+  --gradient-header:linear-gradient(135deg,#0c0404 0%,#280e08 50%,#0c0404 100%);
+}
+[data-theme="amber"] {
+  --color-primary:#d4922a; --color-primary-light:#e8b868;
+  --color-bg:#0c0a04; --color-bg-2:#181408; --color-bg-card:#201a0e;
+  --color-text:#f0e8c8; --color-text-muted:#a09060; --color-border:#4a3810;
+  --color-card-text:#f0e8c8; --color-card-text-muted:#b0a070; --color-card-date:#908060;
+  --gradient-header:linear-gradient(135deg,#0a0804 0%,#241c08 50%,#0a0804 100%);
+}
+
+/* ── BASE ────────────────────────────────────────────────────── */
+html { -webkit-font-smoothing:antialiased; }
+body {
+  font-family: var(--font-main);
+  background: linear-gradient(180deg, #1e0c40 0%, var(--color-bg) 40%);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  min-height: 100vh;
+  min-width: 320px;
+  line-height: 1.7;
+  transition: background .4s, color .4s;
+}
+
+::-webkit-scrollbar { width:6px }
+::-webkit-scrollbar-track { background:var(--color-bg-2); border-radius:3px }
+::-webkit-scrollbar-thumb { background:var(--color-border); border-radius:3px }
+::-webkit-scrollbar-thumb:hover { background:var(--color-primary) }
+
+/* ── ANIMATIONS ──────────────────────────────────────────────── */
+@keyframes slideInDown {
+  from { opacity:0; transform:translateY(-20px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+@keyframes fadeInUp {
+  from { opacity:0; transform:translateY(20px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity:0; } to { opacity:1; }
+}
+@keyframes candle-flicker {
+  0%,100% { opacity:1; transform:scale(1) rotate(0deg); }
+  20%      { opacity:.85; transform:scale(1.06) rotate(-4deg); }
+  40%      { opacity:.95; transform:scale(.97) rotate(2deg); }
+  60%      { opacity:.78; transform:scale(1.09) rotate(-3deg); }
+  80%      { opacity:.9; transform:scale(.95) rotate(3deg); }
+}
+@keyframes pulse-glow {
+  0%,100% { box-shadow:0 4px 24px rgba(0,0,0,.5); }
+  50%      { box-shadow:0 4px 40px 8px var(--color-primary); }
+}
+@keyframes pop {
+  0%  { transform:scale(1); }
+  50% { transform:scale(1.18); }
+  100%{ transform:scale(1); }
+}
+@keyframes float {
+  0%,100%{ transform:translateY(0); }
+  50%    { transform:translateY(-6px); }
+}
+@keyframes bounce-in {
+  0%  { transform:scale(.3); opacity:0; }
+  50% { transform:scale(1.05); opacity:.9; }
+  70% { transform:scale(.9); }
+  100%{ transform:scale(1); opacity:1; }
+}
+
+/* ── LAYOUT ──────────────────────────────────────────────────── */
+.journal-app { min-height:100vh; display:flex; flex-direction:column; }
+
+/* ── HEADER ──────────────────────────────────────────────────── */
+.app-header {
+  background: var(--gradient-header);
+  padding: 1.5rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow-md);
+  position: sticky; top:0; z-index:100;
+  animation: slideInDown .5s ease;
+}
+.header-left { display:flex; flex-direction:column; gap:.15rem; }
+.app-title {
+  font-family: var(--font-title);
+  font-size: clamp(1.5rem,4vw,2.4rem);
+  color: var(--color-primary-light);
+  display: flex; align-items:center; gap:.4rem;
+  letter-spacing:.08em;
+  text-shadow: 0 0 20px var(--color-primary), 0 2px 8px rgba(0,0,0,.6);
+}
+.title-emoji { display:inline-block; animation:candle-flicker 4s ease-in-out infinite; }
+.title-emoji:last-child { animation-delay:2s; }
+.app-subtitle { color:rgba(240,232,208,.7); font-size:.9rem; font-style:italic; letter-spacing:.04em; }
+.header-right { display:flex; align-items:center; gap:.75rem; }
+.btn-icon {
+  background:rgba(255,255,255,.12); color:var(--color-primary-light);
+  width:42px; height:42px; border-radius:50%; font-size:1.25rem;
+  border:1px solid rgba(201,162,39,.3); cursor:pointer;
+  transition:background .2s,transform .15s;
+}
+.btn-icon:hover { background:rgba(255,255,255,.22); transform:scale(1.1); }
+.btn-primary {
+  background:var(--color-primary); color:var(--color-bg);
+  padding:.55rem 1.3rem; border-radius:50px; font-size:.9rem;
+  font-family:var(--font-main); font-weight:700; letter-spacing:.04em;
+  border:none; cursor:pointer;
+  box-shadow:0 2px 12px rgba(0,0,0,.4);
+  transition:transform .15s,box-shadow .15s;
+}
+.btn-primary:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,0,0,.5); }
+
+/* ── ENTRIES CONTAINER ───────────────────────────────────────── */
+.entries-container {
+  flex:1; padding:2rem;
+  max-width:900px; width:100%; margin:0 auto;
+}
+.entries-grid {
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px,1fr));
+  gap:1.2rem;
+}
+
+/* ── JOURNAL CARD ────────────────────────────────────────────── */
+.journal-card {
+  border-radius:var(--radius);
+  padding:1.4rem 1.5rem;
+  box-shadow:var(--shadow-sm);
+  border:1px solid rgba(201,162,39,.15);
+  cursor:default; position:relative; overflow:hidden;
+  transition:transform .2s,box-shadow .2s;
+  animation:fadeInUp .4s ease both;
+}
+.journal-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg,transparent,var(--color-primary),var(--color-primary-light),var(--color-primary),transparent);
+  border-radius:var(--radius) var(--radius) 0 0;
+}
+.journal-card:hover { transform:translateY(-3px); box-shadow:var(--shadow-md); }
+.card-top-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:.75rem; gap:.5rem; }
+.card-left-meta { display:flex; align-items:center; gap:.5rem; min-width:0; }
+.card-drag-handle { color:var(--color-border); cursor:grab; font-size:1rem; padding:4px 2px; }
+.card-mood { font-size:1.4rem; flex-shrink:0; }
+.card-date { font-size:.75rem; color:var(--color-card-date); font-weight:500; }
+.card-actions { display:flex; gap:.3rem; flex-shrink:0; }
+.card-action-btn {
+  background:transparent; border:none; cursor:pointer; font-size:1rem;
+  padding:5px; border-radius:8px; line-height:1;
+  transition:background .15s,transform .15s;
+}
+.card-action-btn:hover { background:rgba(255,255,255,.1); transform:scale(1.15); }
+.card-title {
+  font-family:var(--font-title); font-size:1.2rem;
+  color:var(--color-card-text); margin-bottom:.5rem;
+  cursor:pointer; line-height:1.3; letter-spacing:.04em;
+  transition:color .15s;
+}
+.card-title:hover { color:var(--color-primary-light); }
+.card-preview {
+  color:var(--color-card-text-muted); font-size:.88rem;
+  line-height:1.65; cursor:pointer;
+  display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;
+  font-style:italic;
+}
+.card-stickers { display:flex; flex-wrap:wrap; gap:.3rem; margin-top:.85rem; }
+.card-sticker { font-size:1.4rem; animation:pop .3s ease; transition:transform .15s; }
+.card-sticker:hover { transform:scale(1.2) rotate(5deg); }
+
+/* ── THEME PICKER DROPDOWN ───────────────────────────────────── */
+.theme-picker-overlay {
+  position:fixed; inset:0; background:rgba(0,0,0,.5);
+  z-index:200; display:flex; align-items:flex-start; justify-content:flex-end;
+  padding:80px 1.5rem 0; animation:fadeIn .2s ease;
+}
+.theme-picker-panel {
+  background:var(--color-bg-card); border-radius:var(--radius);
+  padding:1.5rem; box-shadow:var(--shadow-lg); width:240px;
+  border:1px solid var(--color-border); animation:slideInDown .25s ease;
+}
+.theme-picker-title {
+  font-family:var(--font-title); font-size:1.1rem; color:var(--color-primary-light);
+  margin-bottom:1rem; text-align:center; letter-spacing:.06em;
+}
+.theme-options { display:flex; flex-direction:column; gap:.5rem; }
+.theme-option {
+  display:flex; align-items:center; gap:.75rem;
+  padding:.65rem 1rem; border-radius:var(--radius-sm);
+  border:1px solid transparent; cursor:pointer;
+  background:var(--color-bg-2); font-family:var(--font-main);
+  transition:all .2s;
+}
+.theme-option:hover { transform:translateX(4px); border-color:var(--color-primary); }
+.theme-option.active { border-color:var(--color-primary); box-shadow:var(--shadow-sm); }
+.theme-swatch { width:24px; height:24px; border-radius:50%; flex-shrink:0; box-shadow:0 2px 6px rgba(0,0,0,.4); }
+.theme-name { font-size:.9rem; color:var(--color-text); font-weight:500; flex:1; }
+.theme-emoji { font-size:1.1rem; }
+
+/* ── EDITOR MODAL ────────────────────────────────────────────── */
+.editor-overlay {
+  position:fixed; inset:0; background:rgba(0,0,0,.65);
+  backdrop-filter:blur(4px); z-index:300;
+  display:flex; align-items:center; justify-content:center;
+  padding:1rem; animation:fadeIn .2s ease;
+}
+.editor-modal {
+  background:var(--color-bg-card); border-radius:var(--radius);
+  width:100%; max-width:680px; max-height:90vh;
+  display:flex; flex-direction:column;
+  box-shadow:var(--shadow-lg); border:1px solid var(--color-border);
+  animation:bounce-in .35s ease; overflow:hidden;
+}
+.editor-header {
+  background:var(--gradient-header); padding:1.2rem 1.5rem;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.editor-header-title { font-family:var(--font-title); font-size:1.3rem; color:var(--color-primary-light); letter-spacing:.08em; }
+.editor-close-btn {
+  background:rgba(255,255,255,.15); border:none; color:var(--color-primary-light);
+  width:34px; height:34px; border-radius:50%; font-size:1rem; cursor:pointer;
+  display:flex; align-items:center; justify-content:center; transition:background .2s;
+}
+.editor-close-btn:hover { background:rgba(255,255,255,.28); }
+.editor-body { flex:1; overflow-y:auto; padding:1.5rem; display:flex; flex-direction:column; gap:1rem; }
+.editor-title-input {
+  font-family:var(--font-title); font-size:1.5rem; color:var(--color-text);
+  border:none; border-bottom:2px solid var(--color-border); background:transparent;
+  padding:.3rem 0; width:100%; outline:none; transition:border-color .2s;
+  letter-spacing:.04em;
+}
+.editor-title-input::placeholder { color:var(--color-text-muted); opacity:.7; font-style:italic; }
+.editor-title-input:focus { border-bottom-color:var(--color-primary); }
+.editor-content-area {
+  font-family:var(--font-main); font-size:.95rem; color:var(--color-text);
+  border:1px solid var(--color-border); border-radius:var(--radius-sm);
+  background:var(--color-bg); padding:1rem; width:100%; min-height:140px;
+  resize:vertical; outline:none; line-height:1.8;
+  transition:border-color .2s,box-shadow .2s;
+}
+.editor-content-area::placeholder { color:var(--color-text-muted); font-style:italic; }
+.editor-content-area:focus { border-color:var(--color-primary); box-shadow:0 0 0 3px rgba(201,162,39,.15); }
+.section-label {
+  font-size:.72rem; font-weight:700; text-transform:uppercase;
+  letter-spacing:.1em; color:var(--color-text-muted); margin-bottom:.5rem;
+}
+.mood-grid { display:flex; flex-wrap:wrap; gap:.4rem; }
+.mood-btn {
+  background:var(--color-bg-2); border:1px solid transparent;
+  border-radius:50px; padding:.3rem .7rem; font-size:.9rem; cursor:pointer;
+  display:flex; align-items:center; gap:.3rem; transition:all .2s;
+  font-family:var(--font-main);
+}
+.mood-btn span { font-size:.72rem; color:var(--color-text-muted); font-weight:600; }
+.mood-btn:hover { border-color:var(--color-primary); }
+.mood-btn.active { border-color:var(--color-primary); background:var(--color-bg-card); box-shadow:var(--shadow-sm); }
+.color-swatches { display:flex; gap:.5rem; flex-wrap:wrap; }
+.color-swatch-btn { width:28px; height:28px; border-radius:50%; border:2px solid transparent; cursor:pointer; transition:transform .15s,border-color .15s; }
+.color-swatch-btn:hover { transform:scale(1.2); }
+.color-swatch-btn.active { border-color:var(--color-primary); transform:scale(1.15); box-shadow:0 0 0 2px #fff,0 0 0 4px var(--color-primary); }
+.sticker-drop-zone {
+  border:1px dashed var(--color-border); border-radius:var(--radius-sm);
+  padding:.75rem 1rem; min-height:56px; display:flex; flex-wrap:wrap;
+  gap:.4rem; align-items:center; transition:border-color .2s,background .2s;
+}
+.sticker-drop-zone-hint { color:var(--color-text-muted); font-size:.82rem; font-style:italic; }
+.sticker-picker { border:1px solid var(--color-border); border-radius:var(--radius-sm); background:var(--color-bg); overflow:hidden; }
+.sticker-picker-tabs { display:flex; overflow-x:auto; border-bottom:1px solid var(--color-border); scrollbar-width:none; }
+.sticker-picker-tabs::-webkit-scrollbar { display:none; }
+.sticker-tab {
+  flex-shrink:0; padding:.45rem .8rem; font-size:.75rem; font-weight:600;
+  color:var(--color-text-muted); background:transparent; border:none;
+  border-bottom:2px solid transparent; cursor:pointer; white-space:nowrap;
+  font-family:var(--font-main); transition:color .15s,border-color .15s;
+}
+.sticker-tab.active { color:var(--color-primary); border-bottom-color:var(--color-primary); }
+.sticker-grid { display:flex; flex-wrap:wrap; gap:.15rem; padding:.5rem; }
+.sticker-item {
+  font-size:1.5rem; padding:.3rem; border-radius:8px; cursor:pointer;
+  border:1px solid transparent; background:transparent;
+  transition:background .15s,transform .15s;
+}
+.sticker-item:hover { background:var(--color-bg-2); transform:scale(1.2); border-color:var(--color-border); }
+.editor-footer {
+  padding:1rem 1.5rem; border-top:1px solid var(--color-border);
+  display:flex; justify-content:space-between; align-items:center;
+  background:var(--color-bg); gap:.75rem;
+}
+.editor-footer-left,.editor-footer-right { display:flex; gap:.5rem; }
+.btn-save {
+  background:var(--color-primary); color:var(--color-bg);
+  padding:.6rem 1.6rem; border-radius:50px; font-size:.9rem;
+  font-family:var(--font-main); font-weight:700; border:none; cursor:pointer;
+  box-shadow:var(--shadow-sm); transition:transform .15s,box-shadow .15s;
+}
+.btn-save:hover { transform:translateY(-2px); box-shadow:var(--shadow-md); }
+.btn-ghost {
+  background:transparent; color:var(--color-text-muted); padding:.4rem .8rem;
+  border-radius:8px; font-size:.85rem; border:1px solid var(--color-border);
+  cursor:pointer; font-family:var(--font-main); transition:background .2s,color .2s;
+}
+.btn-ghost:hover { background:var(--color-bg-2); color:var(--color-text); }
+.btn-danger {
+  background:transparent; color:#d05040; border:1px solid #d05040;
+  padding:.4rem .9rem; border-radius:8px; font-size:.85rem; cursor:pointer;
+  font-family:var(--font-main); transition:background .2s;
+}
+.btn-danger:hover { background:rgba(180,50,50,.2); }
+
+/* ── FAB ─────────────────────────────────────────────────────── */
+.fab {
+  position:fixed; bottom:2rem; right:2rem; width:60px; height:60px;
+  border-radius:50%; background:var(--gradient-header); color:var(--color-primary-light);
+  font-size:1.6rem; border:1px solid rgba(201,162,39,.4); cursor:pointer;
+  box-shadow:var(--shadow-lg); display:flex; align-items:center; justify-content:center;
+  transition:transform .2s,box-shadow .2s; z-index:50;
+  animation:pulse-glow 3s infinite;
+}
+.fab:hover { transform:scale(1.12) rotate(10deg); }
+
+/* ── EMPTY STATE ─────────────────────────────────────────────── */
+.empty-state { text-align:center; padding:5rem 2rem; }
+.empty-emoji { font-size:5rem; display:block; margin-bottom:1rem; animation:float 3s ease-in-out infinite; }
+.empty-state h2 { font-family:var(--font-title); font-size:1.8rem; color:var(--color-text); letter-spacing:.06em; margin-bottom:.5rem; }
+.empty-state p { color:var(--color-text-muted); margin-bottom:1.5rem; font-style:italic; }
+
+/* ── RESPONSIVE ──────────────────────────────────────────────── */
+@media(max-width:640px){
+  .entries-grid { grid-template-columns:1fr; }
+  .app-header { padding:1rem; }
+  .entries-container { padding:1rem; }
+}
+</style>
+</head>
+<body>
+<div class="journal-app">
+
+  <!-- HEADER -->
+  <header class="app-header">
+    <div class="header-left">
+      <h1 class="app-title">
+        <span class="title-emoji">🌙</span>
+        The Grimoire
+        <span class="title-emoji">🔮</span>
+      </h1>
+      <p class="app-subtitle">Where shadows whisper and secrets keep</p>
+    </div>
+    <div class="header-right">
+      <button class="btn-icon" onclick="toggleThemePicker()" title="Choose your craft">🌀</button>
+      <button class="btn btn-primary" onclick="openNewEntry()">+ New Chapter</button>
+    </div>
+  </header>
+
+  <!-- THEME PICKER -->
+  <div class="theme-picker-overlay" id="themePicker" style="display:none" onclick="closeThemePicker(event)">
+    <div class="theme-picker-panel" onclick="event.stopPropagation()">
+      <p class="theme-picker-title">🔮 Choose Your Craft</p>
+      <div class="theme-options">
+        <button class="theme-option active" onclick="setTheme('grimoire',this)">
+          <span class="theme-swatch" style="background:linear-gradient(135deg,#c9a227,#0f0a1a)"></span>
+          <span class="theme-name">Grimoire</span><span class="theme-emoji">🔮</span>
+        </button>
+        <button class="theme-option" onclick="setTheme('moonlit',this)">
+          <span class="theme-swatch" style="background:linear-gradient(135deg,#8ab4d4,#06090f)"></span>
+          <span class="theme-name">Moonlit</span><span class="theme-emoji">🌙</span>
+        </button>
+        <button class="theme-option" onclick="setTheme('forest',this)">
+          <span class="theme-swatch" style="background:linear-gradient(135deg,#6aab6a,#060e06)"></span>
+          <span class="theme-name">Forest Witch</span><span class="theme-emoji">🌿</span>
+        </button>
+        <button class="theme-option" onclick="setTheme('ember',this)">
+          <span class="theme-swatch" style="background:linear-gradient(135deg,#d4622a,#0e0505)"></span>
+          <span class="theme-name">Ember</span><span class="theme-emoji">🕯️</span>
+        </button>
+        <button class="theme-option" onclick="setTheme('amber',this)">
+          <span class="theme-swatch" style="background:linear-gradient(135deg,#d4922a,#0c0a04)"></span>
+          <span class="theme-name">Amber Witch</span><span class="theme-emoji">✨</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ENTRIES -->
+  <main class="entries-container">
+    <div class="entries-grid" id="entriesGrid">
+
+      <div class="journal-card" style="background:#1e1530" onclick="openEdit(0)">
+        <div class="card-top-row">
+          <div class="card-left-meta">
+            <span class="card-drag-handle">⠿</span>
+            <span class="card-mood">🌙</span>
+            <span class="card-date">Wed, Jun 3, 2026</span>
+          </div>
+          <div class="card-actions">
+            <button class="card-action-btn" onclick="event.stopPropagation();openEdit(0)" title="Edit chapter">🪶</button>
+            <button class="card-action-btn" onclick="event.stopPropagation();deleteCard(0)" title="Delete chapter">🗑️</button>
+          </div>
+        </div>
+        <h3 class="card-title">The Veil Feels Thin Tonight</h3>
+        <p class="card-preview">There is a restlessness in the air that I cannot shake. I lit three candles before midnight and sat with my thoughts until the wax ran low. The flame kept bending west — I take that as a sign…</p>
+        <div class="card-stickers">
+          <span class="card-sticker">🕯️</span>
+          <span class="card-sticker">🌒</span>
+          <span class="card-sticker">✨</span>
+        </div>
+      </div>
+
+      <div class="journal-card" style="background:#14182e" onclick="openEdit(1)">
+        <div class="card-top-row">
+          <div class="card-left-meta">
+            <span class="card-drag-handle">⠿</span>
+            <span class="card-mood">🔮</span>
+            <span class="card-date">Thu, Jun 4, 2026</span>
+          </div>
+          <div class="card-actions">
+            <button class="card-action-btn" onclick="event.stopPropagation();openEdit(1)" title="Edit chapter">🪶</button>
+            <button class="card-action-btn" onclick="event.stopPropagation();deleteCard(1)" title="Delete chapter">🗑️</button>
+          </div>
+        </div>
+        <h3 class="card-title">Intentions for the New Moon</h3>
+        <p class="card-preview">Set out my crystals before dawn. This cycle I am focusing on clarity — letting the fog of last season finally lift. Wrote my intentions on a slip of parchment and watched the smoke carry them upward…</p>
+        <div class="card-stickers">
+          <span class="card-sticker">🌑</span>
+          <span class="card-sticker">💎</span>
+          <span class="card-sticker">🌿</span>
+        </div>
+      </div>
+
+      <div class="journal-card" style="background:#0f2018" onclick="openEdit(2)">
+        <div class="card-top-row">
+          <div class="card-left-meta">
+            <span class="card-drag-handle">⠿</span>
+            <span class="card-mood">🌿</span>
+            <span class="card-date">Fri, May 30, 2026</span>
+          </div>
+          <div class="card-actions">
+            <button class="card-action-btn" onclick="event.stopPropagation();openEdit(2)" title="Edit chapter">🪶</button>
+            <button class="card-action-btn" onclick="event.stopPropagation();deleteCard(2)" title="Delete chapter">🗑️</button>
+          </div>
+        </div>
+        <h3 class="card-title">The Forest Speaks in Roots</h3>
+        <p class="card-preview">Walked the tree line at dusk. The moss was wet and the air smelled of rain and pine. I pressed my palms to an old oak and felt something old and patient stir. Some wisdom doesn't arrive in words.</p>
+        <div class="card-stickers">
+          <span class="card-sticker">🌲</span>
+          <span class="card-sticker">🍄</span>
+          <span class="card-sticker">🦉</span>
+        </div>
+      </div>
+
+      <div class="journal-card" style="background:#1a1625" onclick="openEdit(3)">
+        <div class="card-top-row">
+          <div class="card-left-meta">
+            <span class="card-drag-handle">⠿</span>
+            <span class="card-mood">🌀</span>
+            <span class="card-date">Sun, May 25, 2026</span>
+          </div>
+          <div class="card-actions">
+            <button class="card-action-btn" onclick="event.stopPropagation();openEdit(3)" title="Edit chapter">🪶</button>
+            <button class="card-action-btn" onclick="event.stopPropagation();deleteCard(3)" title="Delete chapter">🗑️</button>
+          </div>
+        </div>
+        <h3 class="card-title">Dreams of the Dark Water</h3>
+        <p class="card-preview">The same dream again. Still water. A lantern on the far shore that never gets closer no matter how long I walk. I woke at 3am certain something needed releasing. Drew a bath and sat with it until sunrise.</p>
+        <div class="card-stickers">
+          <span class="card-sticker">🌊</span>
+          <span class="card-sticker">🕸️</span>
+          <span class="card-sticker">🪶</span>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FAB -->
+  <button class="fab" onclick="openNewEntry()" title="New chapter">🪶</button>
+</div>
+
+<!-- EDITOR MODAL -->
+<div class="editor-overlay" id="editorOverlay" style="display:none" onclick="closeEditor(event)">
+  <div class="editor-modal" onclick="event.stopPropagation()">
+    <div class="editor-header">
+      <span class="editor-header-title" id="editorTitle">🌙 New Chapter</span>
+      <button class="editor-close-btn" onclick="closeEditorDirect()">✕</button>
+    </div>
+    <div class="editor-body">
+      <input class="editor-title-input" id="entryTitle" placeholder="Name this chapter…" />
+      <textarea class="editor-content-area" id="entryContent" rows="6"
+        placeholder="Let the words flow… tell the spirits what weighs upon your heart."></textarea>
+
+      <div>
+        <p class="section-label">Current energy</p>
+        <div class="mood-grid" id="moodGrid"></div>
+      </div>
+
+      <div>
+        <p class="section-label">Bind color</p>
+        <div class="color-swatches" id="colorSwatches"></div>
+      </div>
+
+      <div>
+        <p class="section-label">Sigils & symbols — click to add 🔮</p>
+        <div class="sticker-drop-zone" id="stickerZone">
+          <span class="sticker-drop-zone-hint">Drop your sigils here or choose from below…</span>
+        </div>
+      </div>
+
+      <div class="sticker-picker">
+        <div class="sticker-picker-tabs" id="stickerTabs"></div>
+        <div class="sticker-grid" id="stickerGrid"></div>
+      </div>
+    </div>
+    <div class="editor-footer">
+      <div class="editor-footer-left">
+        <button class="btn-danger" id="deleteBtn" onclick="deleteCurrentEntry()" style="display:none">🗑️ Destroy</button>
+      </div>
+      <div class="editor-footer-right">
+        <button class="btn-ghost" onclick="closeEditorDirect()">Cancel</button>
+        <button class="btn-save" onclick="saveEntry()">🪄 Seal Entry</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────
+const MOODS = [
+  {emoji:'🌙',label:'Mystical'},{emoji:'✨',label:'Enchanted'},
+  {emoji:'🔮',label:'Prophetic'},{emoji:'🌿',label:'Grounded'},
+  {emoji:'🦉',label:'Wise'},{emoji:'🕯️',label:'Reflective'},
+  {emoji:'🌑',label:'Dark Moon'},{emoji:'🌀',label:'Turbulent'},
+];
+const CARD_COLORS = ['#1e1530','#14182e','#0f2018','#221010','#1e1808','#0a1e20','#1a1625','#1e1420'];
+const STICKER_CATEGORIES = {
+  '🌙 Moon':      ['🌙','🌛','🌜','🌚','🌕','✨','💫','⭐','🌟','🌠','🌌','🌃'],
+  '🔮 Magic':     ['🔮','🪄','🧿','🪬','🗝️','📜','📿','🏺','⚗️','🧪','🃏','🎴'],
+  '🌿 Botanica':  ['🌿','🍃','🍄','🌾','🌱','🌺','🪷','🥀','🌻','🌸','🍀','🌲'],
+  '🦉 Familiars': ['🦉','🐈','🦇','🐍','🕷️','🦋','🐺','🐉','🐸','🦂','🦔','🦅'],
+  '🕯️ Ritual':   ['🕯️','💎','🌀','🌊','🔥','💨','🪨','🪶','🌹','🎭','🔔','🧲'],
+  '🖤 Shadow':    ['🖤','🌑','🕸️','🥀','💔','🩶','🌫️','⛈️','🌪️','💀','🪦','👁️'],
+};
+
+let entries = [
+  {id:0,title:'The Veil Feels Thin Tonight',content:'There is a restlessness in the air that I cannot shake. I lit three candles before midnight and sat with my thoughts until the wax ran low. The flame kept bending west — I take that as a sign to let go of what I have been holding.',mood:'🌙',stickers:['🕯️','🌒','✨'],cardColor:'#1e1530'},
+  {id:1,title:'Intentions for the New Moon',content:'Set out my crystals before dawn. This cycle I am focusing on clarity — letting the fog of last season finally lift. Wrote my intentions on a slip of parchment and watched the smoke carry them upward.',mood:'🔮',stickers:['🌑','💎','🌿'],cardColor:'#14182e'},
+  {id:2,title:'The Forest Speaks in Roots',content:'Walked the tree line at dusk. The moss was wet and the air smelled of rain and pine. I pressed my palms to an old oak and felt something old and patient stir. Some wisdom doesn\'t arrive in words.',mood:'🌿',stickers:['🌲','🍄','🦉'],cardColor:'#0f2018'},
+  {id:3,title:'Dreams of the Dark Water',content:'The same dream again. Still water. A lantern on the far shore that never gets closer no matter how long I walk. I woke at 3am certain something needed releasing.',mood:'🌀',stickers:['🌊','🕸️','🪶'],cardColor:'#1a1625'},
+];
+let nextId = 4;
+let editingId = null;
+let activeMood = '🌙';
+let activeColor = '#1e1530';
+let entryStickers = [];
+let activeTab = '🌙 Moon';
+
+// ── THEME ────────────────────────────────────────────────────────
+function toggleThemePicker() {
+  const p = document.getElementById('themePicker');
+  p.style.display = p.style.display === 'none' ? 'flex' : 'none';
+}
+function closeThemePicker(e) {
+  if (e.target === document.getElementById('themePicker'))
+    document.getElementById('themePicker').style.display = 'none';
+}
+function setTheme(t, btn) {
+  document.documentElement.setAttribute('data-theme', t);
+  document.querySelectorAll('.theme-option').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('themePicker').style.display = 'none';
+}
+
+// ── EDITOR ───────────────────────────────────────────────────────
+function openNewEntry() {
+  editingId = null;
+  activeMood = '🌙';
+  activeColor = '#1e1530';
+  entryStickers = [];
+  document.getElementById('entryTitle').value = '';
+  document.getElementById('entryContent').value = '';
+  document.getElementById('editorTitle').textContent = '🌙 New Chapter';
+  document.getElementById('deleteBtn').style.display = 'none';
+  buildEditor();
+  document.getElementById('editorOverlay').style.display = 'flex';
+  setTimeout(() => document.getElementById('entryTitle').focus(), 100);
+}
+function openEdit(id) {
+  const entry = entries.find(e => e.id === id);
+  if (!entry) return;
+  editingId = id;
+  activeMood = entry.mood;
+  activeColor = entry.cardColor;
+  entryStickers = [...entry.stickers];
+  document.getElementById('entryTitle').value = entry.title;
+  document.getElementById('entryContent').value = entry.content;
+  document.getElementById('editorTitle').textContent = '🪶 Edit Chapter';
+  document.getElementById('deleteBtn').style.display = '';
+  buildEditor();
+  document.getElementById('editorOverlay').style.display = 'flex';
+}
+function closeEditor(e) {
+  if (e.target === document.getElementById('editorOverlay')) closeEditorDirect();
+}
+function closeEditorDirect() { document.getElementById('editorOverlay').style.display = 'none'; }
+
+function buildEditor() {
+  buildMoods(); buildColors(); buildStickerZone();
+  buildStickerTabs(); buildStickerGrid(activeTab);
+}
+
+function buildMoods() {
+  const g = document.getElementById('moodGrid');
+  g.innerHTML = MOODS.map(m =>
+    `<button class="mood-btn${activeMood===m.emoji?' active':''}" onclick="selectMood('${m.emoji}',this)">
+       ${m.emoji}<span>${m.label}</span></button>`
+  ).join('');
+}
+function selectMood(emoji, btn) {
+  activeMood = emoji;
+  document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function buildColors() {
+  const g = document.getElementById('colorSwatches');
+  g.innerHTML = CARD_COLORS.map(c =>
+    `<button class="color-swatch-btn${activeColor===c?' active':''}"
+       style="background:${c}" onclick="selectColor('${c}',this)"></button>`
+  ).join('');
+}
+function selectColor(color, btn) {
+  activeColor = color;
+  document.querySelectorAll('.color-swatch-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function buildStickerZone() {
+  const z = document.getElementById('stickerZone');
+  if (entryStickers.length === 0) {
+    z.innerHTML = '<span class="sticker-drop-zone-hint">Drop your sigils here or choose from below…</span>';
+  } else {
+    z.innerHTML = entryStickers.map((s,i) =>
+      `<span style="position:relative;display:inline-flex">
+         <span style="font-size:1.6rem">${s}</span>
+         <button onclick="removeSticker(${i})"
+           style="position:absolute;top:-4px;right:-4px;background:var(--color-primary);color:var(--color-bg);
+                  border:none;border-radius:50%;width:14px;height:14px;font-size:.55rem;cursor:pointer;
+                  display:flex;align-items:center;justify-content:center;line-height:1">✕</button>
+       </span>`
+    ).join('');
+  }
+}
+function removeSticker(i) {
+  entryStickers.splice(i,1);
+  buildStickerZone();
+}
+
+function buildStickerTabs() {
+  const tabs = document.getElementById('stickerTabs');
+  tabs.innerHTML = Object.keys(STICKER_CATEGORIES).map(cat =>
+    `<button class="sticker-tab${activeTab===cat?' active':''}" onclick="switchTab('${cat.replace(/'/g,"\\'")}',this)">${cat}</button>`
+  ).join('');
+}
+function switchTab(cat, btn) {
+  activeTab = cat;
+  document.querySelectorAll('.sticker-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  buildStickerGrid(cat);
+}
+function buildStickerGrid(cat) {
+  const g = document.getElementById('stickerGrid');
+  g.innerHTML = (STICKER_CATEGORIES[cat]||[]).map(e =>
+    `<span class="sticker-item" onclick="addSticker('${e}')">${e}</span>`
+  ).join('');
+}
+function addSticker(emoji) {
+  entryStickers.push(emoji);
+  buildStickerZone();
+}
+
+function saveEntry() {
+  const title = document.getElementById('entryTitle').value.trim();
+  const content = document.getElementById('entryContent').value.trim();
+  if (!title && !content && entryStickers.length === 0) return;
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'});
+  if (editingId !== null) {
+    const idx = entries.findIndex(e => e.id === editingId);
+    if (idx >= 0) entries[idx] = {...entries[idx],title,content,mood:activeMood,cardColor:activeColor,stickers:[...entryStickers]};
+  } else {
+    entries.unshift({id:nextId++,title,content,mood:activeMood,cardColor:activeColor,stickers:[...entryStickers],date:dateStr});
+  }
+  closeEditorDirect();
+  renderEntries();
+}
+
+function deleteCard(id) {
+  entries = entries.filter(e => e.id !== id);
+  renderEntries();
+}
+function deleteCurrentEntry() {
+  if (editingId !== null) { deleteCard(editingId); closeEditorDirect(); }
+}
+
+function renderEntries() {
+  const grid = document.getElementById('entriesGrid');
+  if (entries.length === 0) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
+      <span class="empty-emoji">🔮</span>
+      <h2>Your grimoire awaits</h2>
+      <p>The pages are blank. The ink is ready. Begin your first chapter.</p>
+      <button class="btn-save" style="margin-top:1rem;border-radius:50px;padding:.75rem 2rem" onclick="openNewEntry()">Open the Grimoire 🌙</button>
+    </div>`;
+    return;
+  }
+  grid.innerHTML = entries.map(entry => `
+    <div class="journal-card" style="background:${entry.cardColor}" onclick="openEdit(${entry.id})">
+      <div class="card-top-row">
+        <div class="card-left-meta">
+          <span class="card-drag-handle">⠿</span>
+          <span class="card-mood">${entry.mood}</span>
+          <span class="card-date">${entry.date||'Today'}</span>
+        </div>
+        <div class="card-actions">
+          <button class="card-action-btn" onclick="event.stopPropagation();openEdit(${entry.id})" title="Edit chapter">🪶</button>
+          <button class="card-action-btn" onclick="event.stopPropagation();deleteCard(${entry.id})" title="Delete">🗑️</button>
+        </div>
+      </div>
+      <h3 class="card-title">${entry.title||'Untitled Chapter'}</h3>
+      <p class="card-preview">${entry.content?entry.content.slice(0,130)+(entry.content.length>130?'…':''):'No words yet…'}</p>
+      ${entry.stickers.length?`<div class="card-stickers">${entry.stickers.map(s=>`<span class="card-sticker">${s}</span>`).join('')}</div>`:''}
+    </div>
+  `).join('');
+}
+</script>
+</body>
+</html>
