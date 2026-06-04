@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>✨ Cyberdeck App Review</title>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --pink:    #ff6eb4;
+    --purple:  #c084fc;
+    --blue:    #60a5fa;
+    --teal:    #34d399;
+    --yellow:  #fbbf24;
+    --peach:   #fb923c;
+    --bg:      #fff5f9;
+    --surface: #ffffff;
+    --text:    #3d2a3f;
+    --muted:   #9d7aae;
+    --radius:  18px;
+    --shadow:  0 4px 24px rgba(200,100,180,.15);
+  }
+
+  body {
+    font-family: 'Quicksand', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ─────────────────────────────────────────────── */
+  .hero {
+    background: linear-gradient(135deg, #ff6eb4 0%, #c084fc 50%, #60a5fa 100%);
+    padding: 3rem 2rem 5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.08'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .hero-emoji { font-size: 4rem; display: block; margin-bottom: .5rem; animation: float 3s ease-in-out infinite; }
+  .hero h1 { font-family: 'Dancing Script', cursive; font-size: clamp(2.2rem, 6vw, 4rem); color: #fff; text-shadow: 0 2px 12px rgba(0,0,0,.2); }
+  .hero p  { color: rgba(255,255,255,.9); font-size: 1.1rem; margin-top: .5rem; font-weight: 500; }
+
+  /* ── TABS ─────────────────────────────────────────────────── */
+  .tab-bar {
+    display: flex; justify-content: center; gap: .75rem;
+    background: var(--surface);
+    padding: 1.2rem 1rem;
+    box-shadow: 0 2px 16px rgba(200,100,180,.12);
+    position: sticky; top: 0; z-index: 50;
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    background: #f3e8ff; border: none; cursor: pointer;
+    border-radius: 99px; padding: .55rem 1.4rem;
+    font-family: 'Quicksand', sans-serif; font-size: .95rem; font-weight: 600;
+    color: var(--muted); transition: all .25s ease;
+  }
+  .tab-btn:hover  { background: #e9d5ff; color: var(--purple); transform: translateY(-2px); }
+  .tab-btn.active { background: linear-gradient(135deg, var(--pink), var(--purple)); color: #fff; box-shadow: 0 4px 14px rgba(192,132,252,.4); }
+
+  /* ── PANELS ───────────────────────────────────────────────── */
+  .panels { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+  .panel  { display: none; animation: fadeUp .4s ease; }
+  .panel.active { display: block; }
+
+  /* ── SECTION TITLE ────────────────────────────────────────── */
+  .section-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2rem; color: var(--purple);
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: .5rem;
+  }
+
+  /* ── FEATURE GRID ─────────────────────────────────────────── */
+  .feature-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 1.25rem; }
+  .feature-card {
+    background: var(--surface); border-radius: var(--radius);
+    padding: 1.5rem; box-shadow: var(--shadow);
+    border-top: 4px solid transparent;
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .feature-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(200,100,180,.22); }
+  .feature-card .icon { font-size: 2rem; margin-bottom: .6rem; }
+  .feature-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: .4rem; color: var(--text); }
+  .feature-card p  { font-size: .88rem; color: var(--muted); line-height: 1.55; }
+  .fc-pink   { border-top-color: var(--pink);   }
+  .fc-purple { border-top-color: var(--purple);  }
+  .fc-blue   { border-top-color: var(--blue);    }
+  .fc-teal   { border-top-color: var(--teal);    }
+  .fc-yellow { border-top-color: var(--yellow);  }
+  .fc-peach  { border-top-color: var(--peach);   }
+
+  /* ── STYLE BREAKDOWN ─────────────────────────────────────── */
+  .style-row { display: flex; flex-wrap: wrap; gap: 1.25rem; margin-bottom: 1.5rem; }
+  .style-block {
+    flex: 1; min-width: 200px;
+    background: var(--surface); border-radius: var(--radius);
+    padding: 1.25rem; box-shadow: var(--shadow);
+  }
+  .style-block h4 { font-size: .85rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: .7rem; }
+  .swatch-row { display: flex; gap: .4rem; flex-wrap: wrap; }
+  .swatch {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: .75rem; color: #fff; font-weight: 700;
+    box-shadow: 0 2px 8px rgba(0,0,0,.15);
+    cursor: default; transition: transform .2s;
+  }
+  .swatch:hover { transform: scale(1.2); }
+  .font-demo { font-family: 'Dancing Script', cursive; font-size: 1.4rem; color: var(--purple); margin: .3rem 0; }
+  .font-demo2 { font-family: 'Quicksand', sans-serif; font-size: 1rem; color: var(--muted); }
+  .pill {
+    display: inline-block; background: #f3e8ff; color: var(--purple);
+    border-radius: 99px; padding: .25rem .75rem; font-size: .82rem; font-weight: 600;
+    margin: .2rem;
+  }
+  .score-bar-wrap { margin: .4rem 0; }
+  .score-label { display: flex; justify-content: space-between; font-size: .82rem; margin-bottom: .2rem; color: var(--muted); font-weight: 600; }
+  .score-bar { height: 8px; background: #f3e8ff; border-radius: 99px; overflow: hidden; }
+  .score-fill { height: 100%; border-radius: 99px; transition: width 1s ease; }
+
+  /* ── IMPROVEMENT PLAN ────────────────────────────────────── */
+  .plan-filters { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  .filter-btn {
+    background: #f3e8ff; border: none; cursor: pointer;
+    border-radius: 99px; padding: .4rem 1rem;
+    font-family: 'Quicksand', sans-serif; font-size: .85rem; font-weight: 600;
+    color: var(--muted); transition: all .2s;
+  }
+  .filter-btn:hover  { background: #e9d5ff; }
+  .filter-btn.on { background: var(--text); color: #fff; }
+
+  .plan-items { display: flex; flex-direction: column; gap: 1rem; }
+  .plan-item {
+    background: var(--surface); border-radius: var(--radius);
+    box-shadow: var(--shadow); overflow: hidden;
+    transition: box-shadow .2s;
+  }
+  .plan-item:hover { box-shadow: 0 8px 32px rgba(200,100,180,.22); }
+  .plan-header {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1.1rem 1.4rem; cursor: pointer; user-select: none;
+  }
+  .plan-priority {
+    width: 28px; height: 28px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .75rem; font-weight: 700; color: #fff; flex-shrink: 0;
+  }
+  .p-high   { background: var(--pink);   }
+  .p-medium { background: var(--yellow); color: var(--text); }
+  .p-low    { background: var(--teal);   }
+  .plan-title { flex: 1; font-weight: 700; font-size: .98rem; }
+  .plan-tags  { display: flex; gap: .35rem; flex-wrap: wrap; }
+  .tag {
+    font-size: .72rem; font-weight: 600; border-radius: 99px;
+    padding: .2rem .65rem; text-transform: uppercase; letter-spacing: .04em;
+  }
+  .tag-ux     { background: #fce7f3; color: #be185d; }
+  .tag-feat   { background: #ede9fe; color: #7c3aed; }
+  .tag-perf   { background: #d1fae5; color: #065f46; }
+  .tag-a11y   { background: #dbeafe; color: #1e40af; }
+  .tag-mobile { background: #fff7ed; color: #c2410c; }
+  .tag-tech   { background: #f3f4f6; color: #374151; }
+  .chevron { font-size: 1.1rem; color: var(--muted); transition: transform .3s; flex-shrink: 0; }
+  .plan-item.open .chevron { transform: rotate(180deg); }
+  .plan-body { display: none; padding: 0 1.4rem 1.2rem; border-top: 1px solid #f3e8ff; }
+  .plan-item.open .plan-body { display: block; }
+  .plan-body p { font-size: .9rem; color: var(--muted); line-height: 1.65; margin-top: .8rem; }
+  .plan-body ul { list-style: none; margin-top: .6rem; }
+  .plan-body ul li { font-size: .88rem; color: var(--muted); padding: .3rem 0; display: flex; gap: .6rem; }
+  .plan-body ul li::before { content: '→'; color: var(--purple); font-weight: 700; flex-shrink: 0; }
+  .effort-row { display: flex; gap: 1rem; margin-top: .8rem; flex-wrap: wrap; }
+  .effort-chip { font-size: .78rem; font-weight: 600; color: var(--muted); }
+  .effort-chip span { font-weight: 700; color: var(--text); }
+
+  /* ── VOTED PROGRESS ─────────────────────────────────────── */
+  .vote-row { display: flex; gap: .5rem; margin-top: .9rem; align-items: center; }
+  .vote-btn {
+    background: #f3e8ff; border: none; border-radius: 99px;
+    padding: .35rem .9rem; cursor: pointer; font-size: .85rem; font-weight: 600;
+    font-family: 'Quicksand', sans-serif; color: var(--purple); transition: all .2s;
+  }
+  .vote-btn:hover { background: var(--purple); color: #fff; }
+  .vote-btn.voted { background: linear-gradient(135deg, var(--pink), var(--purple)); color: #fff; }
+  .vote-count { font-size: .82rem; color: var(--muted); }
+
+  /* ── ANIMATIONS ──────────────────────────────────────────── */
+  @keyframes float {
+    0%,100% { transform: translateY(0); }
+    50%      { transform: translateY(-10px); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── RESPONSIVE ──────────────────────────────────────────── */
+  @media (max-width: 480px) {
+    .hero { padding: 2rem 1rem 3.5rem; }
+    .tab-bar { gap: .4rem; }
+    .tab-btn { padding: .45rem .9rem; font-size: .85rem; }
+    .feature-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── DONE CHECKMARK ──────────────────────────────────────── */
+  .done-label {
+    display: inline-flex; align-items: center; gap: .4rem;
+    font-size: .8rem; font-weight: 700; color: var(--teal); margin-left: auto;
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <span class="hero-emoji">🌸</span>
+  <h1>Cyberdeck App Review</h1>
+  <p>A deep-dive into Dear Diary's features, style & a roadmap for what's next ✨</p>
+</div>
+
+<!-- TABS -->
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('features')">📓 Features</button>
+  <button class="tab-btn" onclick="switchTab('style')">🎨 Style & Design</button>
+  <button class="tab-btn" onclick="switchTab('plan')">🗺️ Improvement Plan</button>
+</div>
+
+<div class="panels">
+
+  <!-- ══════════════════════════════════════════════
+       TAB 1 — FEATURES
+  ═══════════════════════════════════════════════ -->
+  <div class="panel active" id="panel-features">
+    <div class="section-title">📓 What Cyberdeck Does</div>
+
+    <div class="feature-grid">
+      <div class="feature-card fc-pink">
+        <div class="icon">✍️</div>
+        <h3>Journal Entries</h3>
+        <p>Create, edit, and delete diary entries. Each entry has a title, free-form content, a date stamp, and persists automatically to <code>localStorage</code>.</p>
+      </div>
+      <div class="feature-card fc-purple">
+        <div class="icon">😊</div>
+        <h3>Mood Tracking</h3>
+        <p>Choose from 8 mood emojis (loved, happy, excited, calm, thoughtful, sad, frustrated, tired) to tag the emotional tone of each entry.</p>
+      </div>
+      <div class="feature-card fc-blue">
+        <div class="icon">🎨</div>
+        <h3>Card Colors</h3>
+        <p>8 pastel card backgrounds — pink, purple, blue, teal, mint, yellow, orange, green — let each entry have its own personality.</p>
+      </div>
+      <div class="feature-card fc-teal">
+        <div class="icon">⭐</div>
+        <h3>Stickers</h3>
+        <p>Decorate entries with stickers from 6 categories: Hearts, Stars, Flowers, Fun, Treats, and Vibes. Drag them from the picker directly onto the card editor.</p>
+      </div>
+      <div class="feature-card fc-yellow">
+        <div class="icon">🖱️</div>
+        <h3>Drag & Drop</h3>
+        <p>Reorder journal cards by dragging. Stickers can also be dragged from the picker into the editor drop zone using <code>@dnd-kit</code>.</p>
+      </div>
+      <div class="feature-card fc-peach">
+        <div class="icon">🌈</div>
+        <h3>5 Themes</h3>
+        <p>Bubblegum, Rose Gold, Lavender, Peach, and Midnight — each with a full set of CSS custom properties that cascade across the entire UI.</p>
+      </div>
+    </div>
+
+    <br/>
+    <div class="section-title" style="margin-top:1.5rem">🔧 Tech Under the Hood</div>
+    <div class="style-row">
+      <div class="style-block">
+        <h4>Stack</h4>
+        <span class="pill">React 18</span>
+        <span class="pill">TypeScript 5</span>
+        <span class="pill">Vite 6</span>
+        <span class="pill">@dnd-kit</span>
+        <span class="pill">CSS Variables</span>
+        <span class="pill">localStorage</span>
+      </div>
+      <div class="style-block">
+        <h4>Architecture Highlights</h4>
+        <ul style="list-style:none">
+          <li style="font-size:.88rem;color:var(--muted);padding:.25rem 0">✅ Centralised state in <code>App.tsx</code></li>
+          <li style="font-size:.88rem;color:var(--muted);padding:.25rem 0">✅ Full TypeScript strict mode, no <code>any</code></li>
+          <li style="font-size:.88rem;color:var(--muted);padding:.25rem 0">✅ <code>crypto.randomUUID()</code> for IDs</li>
+          <li style="font-size:.88rem;color:var(--muted);padding:.25rem 0">✅ Data-attribute theming on <code>&lt;body&gt;</code></li>
+          <li style="font-size:.88rem;color:var(--muted);padding:.25rem 0">✅ Accessible card text contrast</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       TAB 2 — STYLE
+  ═══════════════════════════════════════════════ -->
+  <div class="panel" id="panel-style">
+    <div class="section-title">🎨 Visual Identity</div>
+
+    <div class="style-row">
+      <div class="style-block">
+        <h4>Color Palette</h4>
+        <div class="swatch-row">
+          <div class="swatch" style="background:#ff6eb4" title="Bubblegum Pink">Pk</div>
+          <div class="swatch" style="background:#c084fc" title="Lavender">La</div>
+          <div class="swatch" style="background:#60a5fa" title="Sky Blue">Bl</div>
+          <div class="swatch" style="background:#34d399" title="Mint">Mn</div>
+          <div class="swatch" style="background:#fbbf24;color:#5a3e00" title="Yellow">Ye</div>
+          <div class="swatch" style="background:#fb923c" title="Peach">Pe</div>
+          <div class="swatch" style="background:#1a0d2e" title="Midnight">Md</div>
+        </div>
+        <p style="font-size:.8rem;color:var(--muted);margin-top:.6rem">All soft pastels, five complete themes. Midnight offers a dark alternative without sacrificing card readability.</p>
+      </div>
+      <div class="style-block">
+        <h4>Typography</h4>
+        <div class="font-demo">Dancing Script — titles & headings</div>
+        <div class="font-demo2">Quicksand — body text, buttons, labels</div>
+        <p style="font-size:.8rem;color:var(--muted);margin-top:.6rem">Fluid sizing with <code>clamp()</code> keeps headings crisp on any screen. Rounded letterforms reinforce the playful, friendly feel.</p>
+      </div>
+    </div>
+
+    <div class="style-row">
+      <div class="style-block">
+        <h4>Spacing & Shape</h4>
+        <p style="font-size:.88rem;color:var(--muted);line-height:1.6">18px card border-radius, 10px button radius. Generous padding inside modals and cards. Consistent 8-point-ish grid using CSS custom properties.</p>
+      </div>
+      <div class="style-block">
+        <h4>Micro-animations</h4>
+        <span class="pill">fadeInUp</span>
+        <span class="pill">slideInDown</span>
+        <span class="pill">bounce-in</span>
+        <span class="pill">float</span>
+        <span class="pill">sparkle</span>
+        <span class="pill">pulse-glow</span>
+        <p style="font-size:.8rem;color:var(--muted);margin-top:.6rem">Transforms and opacity only — GPU-friendly, no layout thrash.</p>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:1.5rem">📊 Design Quality Scores</div>
+    <div class="style-block" style="max-width:520px">
+      <div id="score-bars">
+        <div class="score-bar-wrap">
+          <div class="score-label"><span>Visual Cohesion</span><span>92%</span></div>
+          <div class="score-bar"><div class="score-fill" style="width:0%;background:linear-gradient(90deg,#ff6eb4,#c084fc)" data-target="92"></div></div>
+        </div>
+        <div class="score-bar-wrap" style="margin-top:.75rem">
+          <div class="score-label"><span>Playfulness</span><span>96%</span></div>
+          <div class="score-bar"><div class="score-fill" style="width:0%;background:linear-gradient(90deg,#c084fc,#60a5fa)" data-target="96"></div></div>
+        </div>
+        <div class="score-bar-wrap" style="margin-top:.75rem">
+          <div class="score-label"><span>Accessibility</span><span>65%</span></div>
+          <div class="score-bar"><div class="score-fill" style="width:0%;background:linear-gradient(90deg,#fbbf24,#fb923c)" data-target="65"></div></div>
+        </div>
+        <div class="score-bar-wrap" style="margin-top:.75rem">
+          <div class="score-label"><span>Mobile Experience</span><span>70%</span></div>
+          <div class="score-bar"><div class="score-fill" style="width:0%;background:linear-gradient(90deg,#34d399,#60a5fa)" data-target="70"></div></div>
+        </div>
+        <div class="score-bar-wrap" style="margin-top:.75rem">
+          <div class="score-label"><span>Performance</span><span>78%</span></div>
+          <div class="score-bar"><div class="score-fill" style="width:0%;background:linear-gradient(90deg,#fb923c,#fbbf24)" data-target="78"></div></div>
+        </div>
+      </div>
+      <p style="font-size:.78rem;color:var(--muted);margin-top:.8rem">Scores are based on the code review, not a live audit. Accessibility and mobile are the biggest opportunities.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       TAB 3 — IMPROVEMENT PLAN
+  ═══════════════════════════════════════════════ -->
+  <div class="panel" id="panel-plan">
+    <div class="section-title">🗺️ Improvement Roadmap</div>
+    <p style="color:var(--muted);margin-bottom:1.2rem;font-size:.92rem">
+      Click any item to expand details. Filter by category or priority.
+      Vote for the improvements you'd most like to see!
+    </p>
+
+    <div class="plan-filters">
+      <button class="filter-btn on" onclick="setFilter('all',this)">All</button>
+      <button class="filter-btn" onclick="setFilter('ux',this)">UX</button>
+      <button class="filter-btn" onclick="setFilter('feat',this)">Features</button>
+      <button class="filter-btn" onclick="setFilter('perf',this)">Performance</button>
+      <button class="filter-btn" onclick="setFilter('a11y',this)">Accessibility</button>
+      <button class="filter-btn" onclick="setFilter('mobile',this)">Mobile</button>
+      <button class="filter-btn" onclick="setFilter('tech',this)">Tech Debt</button>
+    </div>
+
+    <div class="plan-items" id="plan-items">
+
+      <!-- ITEM 1 -->
+      <div class="plan-item" data-tags="a11y ux" onclick="toggleItem(this)">
+        <div class="plan-header">
+          <div class="plan-priority p-high">H</div>
+          <div class="plan-title">⌨️ Full keyboard navigation & focus management</div>
+          <div class="plan-tags">
+            <span class="tag tag-a11y">Accessibility</span>
+            <span class="tag tag-ux">UX</span>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="plan-body">
+          <p>Currently the app is mouse/touch-first. Screen reader users and keyboard-only users face barriers in the modal, sticker picker tabs, and drag-and-drop interactions.</p>
+          <ul>
+            <li>Add <code>aria-label</code>, <code>role</code>, and <code>aria-expanded</code> to all interactive elements</li>
+            <li>Trap focus inside the modal when it's open; restore focus on close</li>
+            <li>Provide a keyboard alternative to drag-and-drop for entry reordering (↑/↓ arrow keys)</li>
+            <li>Add visible <code>:focus-visible</code> rings (not just <code>:focus</code>) styled to the theme color</li>
+            <li>Announce new entries to screen readers with an ARIA live region</li>
+          </ul>
+          <div class="effort-row">
+            <span class="effort-chip">Effort: <span>Medium (2–3 days)</span></span>
+            <span class="effort-chip">Impact: <span>High</span></span>
+          </div>
+          <div class="vote-row">
+            <button class="vote-btn" onclick="vote(event,this)">💜 Want this!</button>
+            <span class="vote-count" id="vc-1">0 votes</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ITEM 2 -->
+      <div class="plan-item" data-tags="feat" onclick="toggleItem(this)">
+        <div class="plan-header">
+          <div class="plan-priority p-high">H</div>
+          <div class="plan-title">🔍 Search & filter entries</div>
+          <div class="plan-tags">
+            <span class="tag tag-feat">Feature</span>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="plan-body">
+          <p>As the diary fills up, there's no way to find a specific entry or filter by mood. A search bar and mood/date filters would dramatically improve usability over time.</p>
+          <ul>
+            <li>Add a real-time text search bar that filters entries by title and content</li>
+            <li>Add a mood-filter dropdown (show only "😊 Happy" entries, etc.)</li>
+            <li>Add a date range picker or "this week / this month" quick filters</li>
+            <li>Highlight search matches within the card content preview</li>
+          </ul>
+          <div class="effort-row">
+            <span class="effort-chip">Effort: <span>Small–Medium (1–2 days)</span></span>
+            <span class="effort-chip">Impact: <span>High</span></span>
+          </div>
+          <div class="vote-row">
+            <button class="vote-btn" onclick="vote(event,this)">💜 Want this!</button>
+            <span class="vote-count" id="vc-2">0 votes</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ITEM 3 -->
+      <div class="plan-item" data-tags="mobile ux" onclick="toggleItem(this)">
+        <div class="plan-header">
+          <div class="plan-priority p-high">H</div>
+          <div class="plan-title">📱 Mobile-first modal & touch UX overhaul</div>
+          <div class="plan-tags">
+            <span class="tag tag-mobile">Mobile</span>
+            <span class="tag tag-ux">UX</span>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="plan-body">
+          <p>The modal editor fills the viewport on small screens but doesn't use native mobile patterns. The sticker picker tabs are hard to tap and the drag-to-reorder is awkward on touch.</p>
+          <ul>
+            <li>Refactor the modal to a bottom sheet on mobile (slides up from the bottom)</li>
+            <li>Increase tap target sizes for sticker tabs to at least 44×44px</li>
+            <li>Add long-press to enter reorder mode on mobile instead of immediate drag</li>
+            <li>Add haptic feedback on sticker drop (navigator.vibrate)</li>
+            <li>Test on real iOS/Android devices, not just Chrome DevTools emulation</li>
+          </ul>
+          <div class="effort-row">
+            <span class="effort-chip">Effort: <span>Medium (2–4 days)</span></span>
+            <span class="effort-chip">Impact: <span>High for mobile users</span></span>
+          </div>
+          <div class="vote-row">
+            <button class="vote-btn" onclick="vote(event,this)">💜 Want this!</button>
+            <span class="vote-count" id="vc-3">0 votes</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ITEM 4 -->
+      <div class="plan-item" data-tags="feat" onclick="toggleItem(this)">
+        <div class="plan-header">
+          <div class="plan-priority p-medium">M</div>
+          <div class="plan-title">📅 Calendar view</div>
+          <div class="plan-tags">
+            <span class="tag tag-feat">Feature</span>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="plan-body">
+          <p>A mini monthly calendar where days with entries are highlighted with the mood emoji lets users see their journaling habits at a glance — a popular feature in diary apps.</p>
+          <ul>
+            <li>Add a toggle between "Card Grid" and "Calendar" view in the header</li>
+            <li>Render a monthly grid; days with entries show the mood emoji dot</li>
+            <li>Click a day to jump to its entries or open a new entry pre-filled with that date</li>
+            <li>Color-code calendar days by the mood of that day's entry</li>
+          </ul>
+          <div class="effort-row">
+            <span class="effort-chip">Effort: <span>Medium (3–4 days)</span></span>
+            <span class="effort-chip">Impact: <span>High for engagement</span></span>
+          </div>
+          <div class="vote-row">
+            <button class="vote-btn" onclick="vote(event,this)">💜 Want this!</button>
+            <span class="vote-count" id="vc-4">0 votes</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ITEM 5 -->
+      <div class="plan-item" data-tags="perf tech" onclick="toggleItem(this)">
+        <div class="plan-header">
+          <div class="plan-priority p-medium">M</div>
+          <div class="plan-title">💾 Cloud sync / export & import</div>
+          <div class="plan-tags">
+            <span class="tag tag-feat">Feature</span>
+            <span class="tag tag-tech">Tech</span>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="plan-body">
+          <p><code>localStorage</code> is cleared when the browser is cleared or a different device is used. Offering a JSON export/import and optionally a backend sync option protects user data.</p>
+          <ul>
+            <li>Add "Export diary" button that downloads a <code>.json</code> file of all entries</li>
+            <li>Add "Import diary" file picker that merges or replaces entries</li>
+            <li>Optionally integrate a simple backend (Supabase / Firebase) for multi-device sync</li>
+            <li>Show a "last saved" timestamp and storage usage indicator</li>
+          </ul>
+          <div class="effort-row">
+            <span class="effort-chip">Effort: <span>Small for export (half day); Large for cloud (1–2 weeks)</span></span>
+            <span class="effort-chip">Impact: <span>High for data safety</span></span>
+          </div>
+          <div class="vote-row">
+            <button class="vote-btn" onclick="vote(event,this)">💜 Want this!</button>
+            <span class="vote-count" id="vc-5">0 votes</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ITEM 6 -->
+      <div class="plan-item" data-tags="ux feat" onclick="toggleItem(this)">
+        <div class="plan-header">
+          <div class="plan-priority p-medium">M</div>
+          <div class="plan-title">✏️ Rich text editor</div>
+          <div class="plan-tags">
+            <span class="tag tag-ux">UX</span>
+            <span class="tag tag-feat">Feature</span>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="plan-body">
+          <p>Right now content is plain text. Adding basic markdown or a WYSIWYG toolbar (bold, italic, bullet lists) would let users better express themselves and structure longer entries.</p>
+          <ul>
+            <li>Integrate a lightweight editor like <strong>Tiptap</strong> or <strong>Milkdown</strong></li>
+            <li>Support bold, italic, underline, strikethrough, and unordered lists</li>
+            <li>Render Markdown preview on the journal card</li>
+            <li>Keep a plain-text fallback for the 130-char preview on cards</li>
+          </ul>
+          <div class="effort-row">
+            <span class="effort-chip">Effort: <span>Medium (2–3 days)</span></span>
+            <span class="effort-chip">Impact: <span>Medium–High</span></span>
+          </div>
+          <div class="vote-row">
+            <button class="vote-btn" onclick="vote(event,this)">💜 Want this!</button>
+            <span class="vote-count" id="vc-6">0 votes</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ITEM 7 -->
+      <div class="plan-item" data-tags="perf tech" onclick="toggleItem(this)">
+        <div class="plan-header">
+          <div class="plan-priority p-medium">M</div>
+          <div class="plan-title">⚡ Performance: virtualised list & memoisation</div>
+          <div class="plan-tags">
+            <span class="tag tag-perf">Performance</span>
+            <span class="tag tag-tech">Tech</span>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="plan-body">
+          <p>With dozens of entries the card grid re-renders entirely on every state change. This is fine now but will degrade with heavy use.</p>
+          <ul>
+            <li>Wrap <code>JournalCard</code> in <code>React.memo</code> to skip unnecessary re-renders</li>
+            <li>Memoize filtered/sorted entry list with <code>useMemo</code></li>
+            <li>Consider <code>@tanstack/virtual</code> if entry count grows beyond ~200</li>
+            <li>Add a <code>useDebounce</code> around the localStorage write (already partially done)</li>
+          </ul>
+          <div class="effort-row">
+            <span class="effort-chip">Effort: <span>Small (half–1 day)</span></span>
+            <span class="effort-chip">Impact: <span>Future-proofing</span></span>
+          </div>
+          <div class="vote-row">
+            <button class="vote-btn" onclick="vote(event,this)">💜 Want this!</button>
+            <span class="vote-count" id="vc-7">0 votes</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ITEM 8 -->
+      <div class="plan-item" data-tags="feat ux" onclick="toggleItem(this)">
+        <div class="plan-header">
+          <div class="plan-priority p-low">L</div>
+          <div class="plan-title">🔒 PIN / password lock screen</div>
+          <div class="plan-tags">
+            <span class="tag tag-feat">Feature</span>
+            <span class="tag tag-ux">UX</span>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="plan-body">
+          <p>A diary app without any privacy protection is a common concern. Even a simple PIN lock on open would be a meaningful privacy improvement (data stays in localStorage — the lock is just a gate).</p>
+          <ul>
+            <li>Add an optional 4–6 digit PIN setup in settings</li>
+            <li>Show a PIN entry screen on app load if a PIN is configured</li>
+            <li>Use <code>crypto.subtle</code> to hash the PIN before storing it</li>
+            <li>Add a "forgot PIN" that clears all data (with warning)</li>
+          </ul>
+          <div class="effort-row">
+            <span class="effort-chip">Effort: <span>Small–Medium (1–2 days)</span></span>
+            <span class="effort-chip">Impact: <span>High for trust/privacy</span></span>
+          </div>
+          <div class="vote-row">
+            <button class="vote-btn" onclick="vote(event,this)">💜 Want this!</button>
+            <span class="vote-count" id="vc-8">0 votes</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ITEM 9 -->
+      <div class="plan-item" data-tags="tech a11y" onclick="toggleItem(this)">
+        <div class="plan-header">
+          <div class="plan-priority p-low">L</div>
+          <div class="plan-title">🧪 Test coverage — unit + a11y</div>
+          <div class="plan-tags">
+            <span class="tag tag-tech">Tech</span>
+            <span class="tag tag-a11y">Accessibility</span>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="plan-body">
+          <p>There are currently no tests. Adding Vitest unit tests and axe accessibility checks would catch regressions and accessibility issues early.</p>
+          <ul>
+            <li>Set up Vitest + Testing Library for React component tests</li>
+            <li>Test entry CRUD, mood selection, sticker add/remove, theme switching</li>
+            <li>Add <code>jest-axe</code> / <code>@axe-core/react</code> for automated a11y checks</li>
+            <li>Add a GitHub Actions CI pipeline to run tests on every push</li>
+          </ul>
+          <div class="effort-row">
+            <span class="effort-chip">Effort: <span>Medium (2–3 days setup)</span></span>
+            <span class="effort-chip">Impact: <span>Long-term quality</span></span>
+          </div>
+          <div class="vote-row">
+            <button class="vote-btn" onclick="vote(event,this)">💜 Want this!</button>
+            <span class="vote-count" id="vc-9">0 votes</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ITEM 10 -->
+      <div class="plan-item" data-tags="feat ux" onclick="toggleItem(this)">
+        <div class="plan-header">
+          <div class="plan-priority p-low">L</div>
+          <div class="plan-title">📊 Mood analytics & streaks</div>
+          <div class="plan-tags">
+            <span class="tag tag-feat">Feature</span>
+            <span class="tag tag-ux">UX</span>
+          </div>
+          <span class="chevron">▾</span>
+        </div>
+        <div class="plan-body">
+          <p>A "stats" page showing mood trends over time, journaling streak counts, and most-used stickers would reward regular journaling and deepen engagement with the app.</p>
+          <ul>
+            <li>Build a simple mood-over-time line or bar chart (Recharts or Victory)</li>
+            <li>Show a "current streak" and "longest streak" counter in the header</li>
+            <li>Display most-used sticker categories and card colors</li>
+            <li>Add a celebration animation when a streak milestone is reached</li>
+          </ul>
+          <div class="effort-row">
+            <span class="effort-chip">Effort: <span>Medium (2–3 days)</span></span>
+            <span class="effort-chip">Impact: <span>High for retention</span></span>
+          </div>
+          <div class="vote-row">
+            <button class="vote-btn" onclick="vote(event,this)">💜 Want this!</button>
+            <span class="vote-count" id="vc-10">0 votes</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /plan-items -->
+  </div><!-- /panel-plan -->
+
+</div><!-- /panels -->
+
+<script>
+  // ── TAB SWITCHING ──────────────────────────────────────────
+  function switchTab(id) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('panel-' + id).classList.add('active');
+    event.currentTarget.classList.add('active');
+    if (id === 'style') animateBars();
+  }
+
+  // ── SCORE BARS ─────────────────────────────────────────────
+  let barsAnimated = false;
+  function animateBars() {
+    if (barsAnimated) return;
+    barsAnimated = true;
+    document.querySelectorAll('.score-fill').forEach(el => {
+      const t = el.dataset.target;
+      setTimeout(() => { el.style.width = t + '%'; }, 100);
+    });
+  }
+
+  // ── PLAN ACCORDION ─────────────────────────────────────────
+  function toggleItem(el) {
+    el.classList.toggle('open');
+  }
+
+  // ── FILTER ────────────────────────────────────────────────
+  let activeFilter = 'all';
+  function setFilter(tag, btn) {
+    activeFilter = tag;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('on'));
+    btn.classList.add('on');
+    document.querySelectorAll('.plan-item').forEach(item => {
+      if (tag === 'all') {
+        item.style.display = '';
+      } else {
+        const tags = item.dataset.tags || '';
+        item.style.display = tags.includes(tag) ? '' : 'none';
+      }
+    });
+  }
+
+  // ── VOTING ────────────────────────────────────────────────
+  const votes = {};
+  function vote(e, btn) {
+    e.stopPropagation();
+    const item = btn.closest('.plan-item');
+    const vcId = btn.parentElement.querySelector('.vote-count').id;
+    const idx  = vcId.split('-')[1];
+    if (btn.classList.contains('voted')) return;
+    btn.classList.add('voted');
+    btn.textContent = '💜 Voted!';
+    votes[idx] = (votes[idx] || 0) + 1;
+    document.getElementById(vcId).textContent = votes[idx] + ' vote' + (votes[idx] !== 1 ? 's' : '');
+  }
+</script>
+</body>
+</html>
