@@ -1,6 +1,8 @@
+import { memo } from 'react'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { JournalEntry } from '../types'
+import { stripHtml } from '../utils/helpers'
 
 interface JournalCardProps {
   entry: JournalEntry
@@ -8,14 +10,9 @@ interface JournalCardProps {
   onDelete: () => void
 }
 
-export default function JournalCard({ entry, onEdit, onDelete }: JournalCardProps) {
+function JournalCard({ entry, onEdit, onDelete }: JournalCardProps) {
   const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
+    attributes, listeners, setNodeRef, transform, transition, isDragging,
   } = useSortable({ id: entry.id })
 
   const style = {
@@ -25,22 +22,19 @@ export default function JournalCard({ entry, onEdit, onDelete }: JournalCardProp
   }
 
   const dateStr = new Date(entry.date).toLocaleDateString('en-US', {
-    weekday: 'short',
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
+    weekday: 'short', month: 'short', day: 'numeric', year: 'numeric',
   })
 
-  const preview = entry.content
-    ? entry.content.slice(0, 130) + (entry.content.length > 130 ? '…' : '')
-    : 'No content yet…'
+  const plain = stripHtml(entry.content)
+  const preview = plain ? plain.slice(0, 130) + (plain.length > 130 ? '…' : '') : 'No words yet…'
 
   return (
-    <div
+    <article
       ref={setNodeRef}
       style={style}
       className={`journal-card${isDragging ? ' is-dragging' : ''}`}
       {...attributes}
+      aria-label={`Journal entry: ${entry.title || 'Untitled Chapter'}`}
     >
       <div className="card-top-row">
         <div className="card-left-meta">
@@ -48,24 +42,29 @@ export default function JournalCard({ entry, onEdit, onDelete }: JournalCardProp
             className="card-drag-handle"
             {...listeners}
             title="Drag to reorder"
+            aria-label="Drag to reorder"
+            role="button"
+            tabIndex={0}
           >
             ⠿
           </span>
-          <span className="card-mood">{entry.mood}</span>
-          <span className="card-date">{dateStr}</span>
+          <span className="card-mood" aria-label={`Mood: ${entry.mood}`}>{entry.mood}</span>
+          <time className="card-date" dateTime={entry.date}>{dateStr}</time>
         </div>
         <div className="card-actions">
           <button
             className="card-action-btn"
             onClick={onEdit}
             title="Edit chapter"
+            aria-label="Edit this entry"
           >
             🪶
           </button>
           <button
             className="card-action-btn"
-            onClick={(e) => { e.stopPropagation(); onDelete() }}
-            title="Delete entry"
+            onClick={e => { e.stopPropagation(); onDelete() }}
+            title="Delete chapter"
+            aria-label="Delete this entry"
           >
             🗑️
           </button>
@@ -73,7 +72,7 @@ export default function JournalCard({ entry, onEdit, onDelete }: JournalCardProp
       </div>
 
       <h3 className="card-title" onClick={onEdit}>
-        {entry.title || 'Untitled Entry'}
+        {entry.title || 'Untitled Chapter'}
       </h3>
 
       <p className="card-preview" onClick={onEdit}>
@@ -81,12 +80,14 @@ export default function JournalCard({ entry, onEdit, onDelete }: JournalCardProp
       </p>
 
       {entry.stickers.length > 0 && (
-        <div className="card-stickers">
+        <div className="card-stickers" aria-label="Stickers">
           {entry.stickers.map((s, i) => (
-            <span key={i} className="card-sticker">{s}</span>
+            <span key={i} className="card-sticker" aria-hidden="true">{s}</span>
           ))}
         </div>
       )}
-    </div>
+    </article>
   )
 }
+
+export default memo(JournalCard)
